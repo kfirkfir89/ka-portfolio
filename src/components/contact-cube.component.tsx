@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
-import { FormEvent, useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import emailjs from '@emailjs/browser';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as GibHubIcon } from '../assets/iconmonstr-github-1.svg';
 import { ReactComponent as LinkedInIcon } from '../assets/icons8-linkedin.svg';
 
 import { getRandomInt } from '../routes/home/home.component';
-import ContactForm from './contact-form.component';
 
 type ContactFormData = {
   name: string;
@@ -24,6 +25,7 @@ const ContactCube = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [isResize, setIsResize] = useState(false);
   const navigate = useNavigate();
+  const form = useRef<HTMLFormElement>(null);
 
   let windowVh = '6vh';
   let windowVw = '17vw';
@@ -58,30 +60,25 @@ const ContactCube = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const sendEmail = async (
-      email: string,
-      subject: string,
-      message: string
-    ) => {
-      const response = await fetch('/.netlify/functions/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          subject,
-          message,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to send email');
-      } else {
-        console.log(response.json());
+    const sendEmail = async (target: EventTarget) => {
+      if (!form.current) return;
+      try {
+        const res = await emailjs.sendForm(
+          'gmail',
+          'portfolio',
+          form.current,
+          'wKrNV5PQsbDeKT6yB'
+        );
+        if (res) {
+          console.log(res.text);
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
-    const res = sendEmail(formData.email, formData.name, formData.message);
+    const { target } = event;
+    const res = sendEmail(target);
+    event.target.reset()!;
   };
 
   return (
@@ -174,57 +171,55 @@ const ContactCube = () => {
                 </div>
               </div>
             </div>
-            {/* <ContactForm /> */}
             <form
+              ref={form}
               className="flex flex-col gap-4 px-6 pb-4"
               onSubmit={handleSubmit}
               name="contact"
-              data-netlify="true"
-              method="POST"
             >
               <input type="hidden" name="form-name" value="contact" />
               <div>
                 <label className="label font-semibold tracking-wide">
                   Name:
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="input"
-                    required
-                  />
                 </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="input"
+                  required
+                />
               </div>
 
               <div>
                 <label className="label font-semibold tracking-wide">
                   Email:
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="input"
-                    required
-                  />
                 </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="input"
+                  required
+                />
               </div>
 
               <div>
                 <label className="label font-semibold tracking-wide">
                   Message:
-                  <textarea
-                    name="message"
-                    id="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="textarea"
-                    required
-                  />
                 </label>
+                <textarea
+                  name="message"
+                  id="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="textarea"
+                  required
+                />
               </div>
 
               <div className="flex justify-center gap-4">
