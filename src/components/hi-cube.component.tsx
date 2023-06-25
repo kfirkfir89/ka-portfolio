@@ -93,8 +93,9 @@ const HiCube = () => {
                 </span>
               </p>
             </div>
-            <h1 className="whitespace-nowrap text-xs font-semibold sm:text-base">
-              Fullstack Web Developer
+            <h1 className="text-xs font-semibold sm:text-base">
+              A Fullstack web developer bringing ideas to life with fully
+              responsive and user-friendly applications.
             </h1>
           </div>
         </motion.div>

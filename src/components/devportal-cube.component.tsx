@@ -145,6 +145,7 @@ const DevPortalCube = () => {
                 <div className="group relative  inline-flex">
                   <div className="transitiona-all absolute -inset-px rounded-xl bg-gradient-to-r  from-gray-100 via-orange-100 to-gray-100 opacity-70 blur-lg duration-1000 group-hover:-inset-1 group-hover:opacity-100 group-hover:duration-200" />
                   <Link
+                    target="_blank"
                     to="https://dev-portal.org/"
                     className="font-pj relative inline-flex h-14 items-center   justify-center bg-gray-300 px-12  text-lg font-bold uppercase text-slate-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
                     role="button"
@@ -155,6 +156,7 @@ const DevPortalCube = () => {
                 <div className="group relative  inline-flex">
                   <div className="transitiona-all absolute -inset-px rounded-xl bg-gradient-to-r  from-gray-100 via-orange-100 to-gray-100 opacity-70 blur-lg duration-1000 group-hover:-inset-1 group-hover:opacity-100 group-hover:duration-200" />
                   <Link
+                    target="_blank"
                     to="https://github.com/kfirkfir89/TheBlogProject"
                     className="font-pj relative inline-flex h-14 items-center   justify-center bg-slate-700 px-12  text-lg font-bold uppercase text-slate-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
                     role="button"
