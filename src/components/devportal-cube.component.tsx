@@ -81,7 +81,7 @@ const DevPortalCube = () => {
                 delay: 0.5,
               },
             }}
-            className="absolute z-50 mr-8 max-h-screen w-[310px] cursor-default flex-col justify-center overflow-auto  py-8 sm:w-[460px]"
+            className="absolute z-50 mr-8 max-h-screen w-[310px] cursor-default flex-col justify-center overflow-auto  py-8 pb-12  sm:w-[460px]"
           >
             <h1 className="mb-4 self-center whitespace-nowrap p-4 font-custom text-3xl">
               <DevPortalIcon className="h-fit w-28 sm:w-32" />
@@ -140,8 +140,8 @@ const DevPortalCube = () => {
                 personalized recommendations.
               </span>
             </p>
-            <div className="flex justify-center gap-4">
-              <div className=" flex items-center justify-center gap-8 pt-8">
+            <div className="flex justify-center gap-4 py-8">
+              <div className=" flex items-center justify-center gap-8 ">
                 <div className="group relative  inline-flex">
                   <div className="transitiona-all absolute -inset-px rounded-xl bg-gradient-to-r  from-gray-100 via-orange-100 to-gray-100 opacity-70 blur-lg duration-1000 group-hover:-inset-1 group-hover:opacity-100 group-hover:duration-200" />
                   <Link

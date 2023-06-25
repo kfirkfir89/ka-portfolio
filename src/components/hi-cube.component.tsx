@@ -4,7 +4,7 @@ import { getRandomInt } from '../routes/home/home.component';
 const HiCube = () => {
   let windowVh = '-25vh';
   let windowVw = '45vw';
-  let cubeSize = '14rem';
+  let cubeSize = '15rem';
   if (window.innerWidth > 390) {
     windowVh = '-30vh';
     windowVw = '45vw';
@@ -76,7 +76,7 @@ const HiCube = () => {
       >
         <motion.div className="absolute z-20 flex justify-center bg-teal-300 pb-10">
           <div className=" flex flex-col">
-            <div className="flex text-3xl text-lime-600">
+            <div className="flex justify-center text-3xl text-amber-700">
               <span className="font-custom">Hi</span>
               <h1 className="flex ">
                 {' '}
@@ -85,18 +85,27 @@ const HiCube = () => {
                 </span>
               </h1>
               <p className="flex pt-9 ">
-                <span className="self-end whitespace-nowrap font-custom  text-xl text-cyan-500">
+                <span className="self-end whitespace-nowrap font-custom  text-xl text-purple-400">
                   I&apos;m
                 </span>
-                <span className="self-end whitespace-nowrap pl-2 font-custom  text-xl text-cyan-500">
+                <span className="self-end whitespace-nowrap pl-2 font-custom  text-xl text-purple-400">
                   kfir
                 </span>
               </p>
             </div>
-            <h1 className="text-xs font-semibold sm:text-base">
-              A Fullstack web developer bringing ideas to life with fully
-              responsive and user-friendly applications.
-            </h1>
+            <p className="white pl-3 pt-4 text-xs font-semibold capitalize sm:text-base">
+              <span className="whitespace-nowrap">
+                A Fullstack web developer
+              </span>
+              <br />
+              <span className="flex">
+                bringing ideas to life with fully responsive
+              </span>
+
+              <span className="flex whitespace-nowrap">
+                and user-friendly applications.
+              </span>
+            </p>
           </div>
         </motion.div>
       </motion.div>

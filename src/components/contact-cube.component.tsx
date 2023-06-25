@@ -48,7 +48,22 @@ const ContactCube = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // onSubmit(formData);
+
+    // const sendEmail = async () => {
+    //   try {
+    //     const response = await fetch('/.netlify/functions/sendmail', {
+    //       method: 'POST',
+    //       body: JSON.stringify(formData),
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     });
+    //   } catch (error) {}
+    // };
+
+    // if (!response.ok) {
+    //   // Handle error...
+    // }
   };
 
   return (
@@ -144,7 +159,10 @@ const ContactCube = () => {
             <form
               className="flex flex-col gap-4 px-6 pb-4"
               onSubmit={handleSubmit}
+              name="contact"
+              data-netlify="true"
             >
+              <input type="hidden" name="form-name" value="contact" />
               <div className="flex flex-col">
                 <label className="label font-semibold tracking-wide">
                   Name:
