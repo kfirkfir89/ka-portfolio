@@ -25,6 +25,7 @@
     "src/custom.d.ts",
     "src",
     "./package.json",
+    "./netlify/functions/send-email.js"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

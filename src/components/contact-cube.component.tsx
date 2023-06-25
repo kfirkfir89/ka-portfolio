@@ -5,6 +5,7 @@ import { ReactComponent as GibHubIcon } from '../assets/iconmonstr-github-1.svg'
 import { ReactComponent as LinkedInIcon } from '../assets/icons8-linkedin.svg';
 
 import { getRandomInt } from '../routes/home/home.component';
+import ContactForm from './contact-form.component';
 
 type ContactFormData = {
   name: string;
@@ -55,7 +56,33 @@ const ContactCube = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {};
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const sendEmail = async (
+      email: string,
+      subject: string,
+      message: string
+    ) => {
+      const response = await fetch('/.netlify/functions/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          subject,
+          message,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      } else {
+        console.log(response.json());
+      }
+    };
+    const res = sendEmail(formData.email, formData.name, formData.message);
+  };
 
   return (
     <motion.div className={`${isToggled ? 'z-[100]' : 'z-50'} flex`}>
@@ -147,12 +174,13 @@ const ContactCube = () => {
                 </div>
               </div>
             </div>
+            {/* <ContactForm /> */}
             <form
               className="flex flex-col gap-4 px-6 pb-4"
               onSubmit={handleSubmit}
               name="contact"
               data-netlify="true"
-              method="post"
+              method="POST"
             >
               <input type="hidden" name="form-name" value="contact" />
               <div>
