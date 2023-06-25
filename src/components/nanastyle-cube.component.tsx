@@ -8,6 +8,7 @@ import { getRandomInt } from '../routes/home/home.component';
 const NanaStyleCube = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isResize, setIsResize] = useState(false);
 
   let windowVh = '14vh';
   let windowVw = '67vw';
@@ -24,8 +25,15 @@ const NanaStyleCube = () => {
   }
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsResize(true);
+    };
+
+    window.addEventListener('resize', handleResize);
     setIsMounted(true);
-  }, []);
+    return setIsResize(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.innerWidth]);
 
   return (
     <motion.div className={`${isToggled ? 'z-[100]' : 'z-50'} flex`}>
@@ -54,10 +62,10 @@ const NanaStyleCube = () => {
             rotate: getRandomInt(5, 170),
             height: isToggled ? '65rem' : cubeSize,
             width: isToggled ? '65rem' : cubeSize,
-            transition: { delay: isMounted ? 0 : 2 },
+            transition: { delay: isMounted || isResize ? 0 : 2 },
           }}
           onClick={() => setIsToggled(!isToggled)}
-          className="absolute z-20 flex h-10 w-10 bg-teal-300"
+          className="absolute z-20 flex h-10 w-10 bg-teal-300 shadow-sm"
         />
         <motion.div
           initial={{ height: '0.8rem', width: '0.8rem' }}
@@ -65,9 +73,9 @@ const NanaStyleCube = () => {
             rotate: [360, -getRandomInt(5, 170)],
             height: cubeSize,
             width: cubeSize,
-            transition: { delay: 2 },
+            transition: { delay: isResize ? 0 : 2 },
           }}
-          className="absolute z-10 flex w-full max-w-xs bg-orange-300"
+          className="absolute z-10 flex w-full max-w-xs bg-orange-300 shadow-sm"
         />
         {isToggled && (
           <motion.div
@@ -176,9 +184,11 @@ const NanaStyleCube = () => {
           }}
           animate={{
             opacity: 1,
+            x: windowVw,
+            y: windowVh,
             transition: {
               duration: 0.5,
-              delay: 2.2,
+              delay: isResize ? 0 : 2.2,
             },
           }}
           whileHover={{

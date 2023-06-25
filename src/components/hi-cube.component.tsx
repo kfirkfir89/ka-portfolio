@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { getRandomInt } from '../routes/home/home.component';
 
 const HiCube = () => {
+  const [isResize, setIsResize] = useState(false);
+
   let windowVh = '-25vh';
   let windowVw = '45vw';
   let cubeSize = '15rem';
@@ -16,6 +19,16 @@ const HiCube = () => {
     cubeSize = '20rem';
   }
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsResize(true);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return setIsResize(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.innerWidth]);
+
   return (
     <div className="z-50 flex">
       <motion.div
@@ -25,6 +38,7 @@ const HiCube = () => {
         }}
         animate={{
           x: windowVw,
+          y: windowVh,
           rotate: [-360, getRandomInt(5, 170)],
           transition: {
             type: 'spring',
@@ -42,7 +56,7 @@ const HiCube = () => {
             rotate: getRandomInt(5, 170),
             height: cubeSize,
             width: cubeSize,
-            transition: { delay: 2 },
+            transition: { delay: isResize ? 0 : 2 },
           }}
           className="absolute z-20 flex h-10 w-10 bg-teal-300 shadow-sm"
         />
@@ -52,7 +66,7 @@ const HiCube = () => {
             rotate: [360, -getRandomInt(5, 170)],
             height: cubeSize,
             width: cubeSize,
-            transition: { delay: 2 },
+            transition: { delay: isResize ? 0 : 2 },
           }}
           className="absolute z-10 flex w-full max-w-xs bg-orange-300 shadow-sm"
         />
@@ -67,14 +81,16 @@ const HiCube = () => {
         }}
         animate={{
           opacity: 1,
+          x: windowVw,
+          y: windowVh,
           transition: {
             duration: 0.5,
-            delay: 2.2,
+            delay: isResize ? 0 : 2.2,
           },
         }}
         className="relative z-30 flex items-center justify-center "
       >
-        <motion.div className="absolute z-20 flex justify-center bg-teal-300 pb-10">
+        <motion.div className="absolute z-20 flex justify-center bg-transparent pb-10">
           <div className=" flex flex-col">
             <div className="flex justify-center text-3xl text-amber-700">
               <span className="font-custom">Hi</span>

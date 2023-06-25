@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { FormEvent, FormEventHandler, useEffect, useState } from 'react';
-import { Link, useNavigate, useNavigation } from 'react-router-dom';
+import { FormEvent, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as GibHubIcon } from '../assets/iconmonstr-github-1.svg';
 import { ReactComponent as LinkedInIcon } from '../assets/icons8-linkedin.svg';
 
@@ -21,6 +21,7 @@ const ContactCube = () => {
 
   const [isToggled, setIsToggled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isResize, setIsResize] = useState(false);
   const navigate = useNavigate();
 
   let windowVh = '6vh';
@@ -38,8 +39,15 @@ const ContactCube = () => {
   }
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsResize(true);
+    };
+
+    window.addEventListener('resize', handleResize);
     setIsMounted(true);
-  }, []);
+    return setIsResize(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.innerWidth]);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -47,19 +55,7 @@ const ContactCube = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const myForm: any = event.target;
-    const formData: any = new FormData(myForm);
-
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString(),
-    })
-      .then(() => navigate('/thank-you/'))
-      .catch((error) => alert(error));
-  };
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {};
 
   return (
     <motion.div className={`${isToggled ? 'z-[100]' : 'z-50'} flex`}>
@@ -88,10 +84,10 @@ const ContactCube = () => {
             rotate: getRandomInt(5, 170),
             height: isToggled ? '65rem' : cubeSize,
             width: isToggled ? '65rem' : cubeSize,
-            transition: { delay: isMounted ? 0 : 2 },
+            transition: { delay: isMounted || isResize ? 0 : 2 },
           }}
           onClick={() => setIsToggled(!isToggled)}
-          className="absolute z-20 flex h-10 w-10 bg-teal-300"
+          className="absolute z-20 flex h-10 w-10 bg-teal-300 shadow-sm"
         />
         <motion.div
           initial={{ height: '0.8rem', width: '0.8rem' }}
@@ -99,9 +95,9 @@ const ContactCube = () => {
             rotate: [360, -getRandomInt(5, 170)],
             height: cubeSize,
             width: cubeSize,
-            transition: { delay: 2 },
+            transition: { delay: isResize ? 0 : 2 },
           }}
-          className="absolute z-10 flex w-full max-w-xs bg-orange-300"
+          className="absolute z-10 flex w-full max-w-xs bg-orange-300 shadow-sm"
         />
         {isToggled && (
           <motion.div
@@ -129,7 +125,7 @@ const ContactCube = () => {
                     to="https://www.linkedin.com/in/kfir-avraham-91637b123/"
                     className="flex w-7"
                   >
-                    <LinkedInIcon />
+                    <LinkedInIcon className="text-slate-800" />
                   </Link>
                   <Link
                     to="mailto:kfirkfir89@gmail.com"
@@ -159,46 +155,48 @@ const ContactCube = () => {
               method="post"
             >
               <input type="hidden" name="form-name" value="contact" />
-              <div className="flex flex-col">
+              <div>
                 <label className="label font-semibold tracking-wide">
                   Name:
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="input"
+                    required
+                  />
                 </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="input"
-                  required
-                />
               </div>
-              <div className="flex flex-col">
+
+              <div>
                 <label className="label font-semibold tracking-wide">
                   Email:
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="input"
+                    required
+                  />
                 </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="input"
-                  required
-                />
               </div>
-              <div className="flex flex-col">
+
+              <div>
                 <label className="label font-semibold tracking-wide">
                   Message:
+                  <textarea
+                    name="message"
+                    id="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="textarea"
+                    required
+                  />
                 </label>
-                <textarea
-                  name="message"
-                  id="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="textarea"
-                  required
-                />
               </div>
 
               <div className="flex justify-center gap-4">
@@ -228,9 +226,11 @@ const ContactCube = () => {
           }}
           animate={{
             opacity: 1,
+            x: windowVw,
+            y: windowVh,
             transition: {
               duration: 0.5,
-              delay: 2.2,
+              delay: isResize ? 0 : 2.2,
             },
           }}
           whileHover={{
@@ -241,13 +241,13 @@ const ContactCube = () => {
           onClick={() => setIsToggled(!isToggled)}
         >
           <motion.div className="absolute z-20 flex justify-center ">
-            <div className=" flex flex-col  whitespace-nowrap text-center font-semibold   tracking-widest text-slate-700">
-              <span>Get in</span>
-              <span>Touch</span>
-              <span className="mt-1 flex flex-col items-center justify-center sm:text-xl">
+            <motion.div className=" flex flex-col  whitespace-nowrap text-center font-semibold   tracking-widest text-slate-700">
+              <motion.span>Get in</motion.span>
+              <motion.span>Touch</motion.span>
+              <motion.span className="mt-1 flex flex-col items-center justify-center sm:text-xl">
                 🙋‍♂️
-              </span>
-            </div>
+              </motion.span>
+            </motion.div>
           </motion.div>
         </motion.div>
       )}
