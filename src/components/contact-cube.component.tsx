@@ -158,7 +158,7 @@ const ContactCube = () => {
             </div>
             <form
               className="flex flex-col gap-4 px-6 pb-4"
-              onSubmit={handleSubmit}
+              // onSubmit={handleSubmit}
               name="contact"
               data-netlify="true"
             >
@@ -170,6 +170,7 @@ const ContactCube = () => {
                 <input
                   type="text"
                   name="name"
+                  id="name"
                   value={formData.name}
                   onChange={handleChange}
                   className="input"
@@ -183,6 +184,7 @@ const ContactCube = () => {
                 <input
                   type="email"
                   name="email"
+                  id="email"
                   value={formData.email}
                   onChange={handleChange}
                   className="input"
@@ -195,6 +197,7 @@ const ContactCube = () => {
                 </label>
                 <textarea
                   name="message"
+                  id="message"
                   value={formData.message}
                   onChange={handleChange}
                   className="textarea"
