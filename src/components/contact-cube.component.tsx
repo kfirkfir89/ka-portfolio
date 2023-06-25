@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { FormEvent, FormEventHandler, useEffect, useState } from 'react';
+import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import { ReactComponent as GibHubIcon } from '../assets/iconmonstr-github-1.svg';
 import { ReactComponent as LinkedInIcon } from '../assets/icons8-linkedin.svg';
 
@@ -21,6 +21,7 @@ const ContactCube = () => {
 
   const [isToggled, setIsToggled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const navigate = useNavigate();
 
   let windowVh = '6vh';
   let windowVw = '17vw';
@@ -46,24 +47,18 @@ const ContactCube = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const myForm: any = event.target;
+    const formData: any = new FormData(myForm);
 
-    // const sendEmail = async () => {
-    //   try {
-    //     const response = await fetch('/.netlify/functions/sendmail', {
-    //       method: 'POST',
-    //       body: JSON.stringify(formData),
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     });
-    //   } catch (error) {}
-    // };
-
-    // if (!response.ok) {
-    //   // Handle error...
-    // }
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString(),
+    })
+      .then(() => navigate('/thank-you/'))
+      .catch((error) => alert(error));
   };
 
   return (
@@ -158,9 +153,10 @@ const ContactCube = () => {
             </div>
             <form
               className="flex flex-col gap-4 px-6 pb-4"
-              // onSubmit={handleSubmit}
+              onSubmit={handleSubmit}
               name="contact"
               data-netlify="true"
+              method="post"
             >
               <input type="hidden" name="form-name" value="contact" />
               <div className="flex flex-col">
