@@ -24,7 +24,8 @@ const ContactCube = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isResize, setIsResize] = useState(false);
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
   const form = useRef<HTMLFormElement>(null);
 
   let windowVh = '6vh';
@@ -52,6 +53,12 @@ const ContactCube = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.innerWidth]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage('');
+    }, 3000);
+  }, [message]);
+
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -59,18 +66,25 @@ const ContactCube = () => {
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     const sendEmail = async (target: EventTarget) => {
       if (!form.current) return;
       try {
         const res = await emailjs.sendForm(
-          'gmail',
-          'portfolio',
+          'service_7t9573v',
+          'template_jdzykrt',
           form.current,
           'wKrNV5PQsbDeKT6yB'
         );
         if (res) {
-          console.log(res.text);
+          setFormData({
+            name: '',
+            email: '',
+            message: '',
+          });
+          setIsLoading(false);
+          setMessage('Email successfully sent'!);
         }
       } catch (error) {
         console.log(error);
@@ -78,7 +92,6 @@ const ContactCube = () => {
     };
     const { target } = event;
     const res = sendEmail(target);
-    event.target.reset()!;
   };
 
   return (
@@ -171,6 +184,24 @@ const ContactCube = () => {
                 </div>
               </div>
             </div>
+            {message && (
+              <div className="alert alert-success bg-green-200">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 shrink-0 stroke-current"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>{message}</span>
+              </div>
+            )}
             <form
               ref={form}
               className="flex flex-col gap-4 px-6 pb-4"
@@ -230,7 +261,9 @@ const ContactCube = () => {
                       type="submit"
                       className="relative inline-flex h-14 items-center justify-center bg-slate-300 px-12  text-lg font-bold uppercase text-slate-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
                     >
-                      submit
+                      <span className={`${isLoading ? 'loading' : ''}`}>
+                        submit
+                      </span>
                     </button>
                   </div>
                 </div>
