@@ -209,49 +209,41 @@ const ContactCube = () => {
               name="contact"
             >
               <input type="hidden" name="form-name" value="contact" />
-              <div>
-                <label className="label font-semibold tracking-wide">
-                  Name:
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="input"
-                  required
-                />
-              </div>
+              <label className="label font-semibold tracking-wide">Name:</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="input"
+                required
+              />
 
-              <div>
-                <label className="label font-semibold tracking-wide">
-                  Email:
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="input"
-                  required
-                />
-              </div>
+              <label className="label font-semibold tracking-wide">
+                Email:
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="input"
+                required
+              />
 
-              <div>
-                <label className="label font-semibold tracking-wide">
-                  Message:
-                </label>
-                <textarea
-                  name="message"
-                  id="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="textarea"
-                  required
-                />
-              </div>
+              <label className="label font-semibold tracking-wide">
+                Message:
+              </label>
+              <textarea
+                name="message"
+                id="message"
+                value={formData.message}
+                onChange={handleChange}
+                className="textarea"
+                required
+              />
 
               <div className="flex justify-center gap-4">
                 <div className=" flex items-center justify-center gap-8 pt-8">

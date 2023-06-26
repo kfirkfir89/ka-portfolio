@@ -30,6 +30,11 @@ const Home = () => {
       <NanaStyleCube />
       <DevPortalCube />
       <BgCubes />
+      <div className="absolute bottom-2 z-50  w-full pl-2">
+        <span className="tracking-wider text-slate-700 opacity-40">
+          © kfir avraham 2023 - All right reserved
+        </span>
+      </div>
     </div>
   );
 };
