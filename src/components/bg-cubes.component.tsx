@@ -72,6 +72,7 @@ const BgCubes = () => {
                     zIndex: 100,
                     rotate: getRandomInt(5, 170),
                   }}
+                  style={{ userSelect: 'none' }}
                 >
                   <motion.div className="relative flex flex-col items-center justify-center">
                     <div className="relative flex items-center justify-center ">
@@ -106,6 +107,7 @@ const BgCubes = () => {
                             duration: 5,
                           },
                         }}
+                        contentEditable="false"
                         className={`absolute bg-gray-400 opacity-50 ${
                           tailwindColors[getRandomInt(0, tailwindColors.length)]
                         } hover:opacity-100`}
@@ -131,9 +133,10 @@ const BgCubes = () => {
                       damping: 30,
                     },
                   }}
-                  className="absolute z-0"
+                  className=" absolute z-0"
+                  style={{ userSelect: 'none' }}
                 >
-                  <div className="relative flex flex-col items-center justify-center">
+                  <div className="relative  flex flex-col items-center justify-center">
                     <motion.div
                       initial={{
                         height: '0vw',
