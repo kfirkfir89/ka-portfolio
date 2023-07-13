@@ -19,7 +19,7 @@
   },
   "include": [
     "./.eslintrc.cjs",
-    "postcss.config.js",
+    "postcss.config.cjs",
     "vite.config.ts",
     "tailwind.config.cjs",
     "src/custom.d.ts",
