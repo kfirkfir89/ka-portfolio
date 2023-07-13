@@ -22,9 +22,16 @@
 }
 
 @layer utilities {
-  html, body ,#root{
-    height: 100%;
-    width: 100%;
+  html,
+  body,
+  #root {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      /* Prevents overflow on the x-axis */
+      overflow-x: hidden;
+      overflow-y: hidden;
   }
   .customclass {
     @apply font-custom2 text-[6.5rem] bg-[url('/src/assets/keyboard.svg')] bg-cover text-transparent bg-clip-text;
